@@ -5,9 +5,9 @@ import { fetchCountries } from './fetchCountries';
 console.log(fetchCountries);
 
 const DEBOUNCE_DELAY = 300;
-inputEl = document.querySelector('#search-box');
-listEl = document.querySelector('.country-list');
-cardEl = document.querySelector('.country-info');
+const inputEl = document.querySelector('#search-box');
+const listEl = document.querySelector('.country-list');
+const cardEl = document.querySelector('.country-info');
 
 inputEl.addEventListener('input', debounce(func, 1000));
 
