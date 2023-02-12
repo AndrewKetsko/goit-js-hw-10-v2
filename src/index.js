@@ -48,7 +48,7 @@ function countryList(list) {
 function countryCard(country) {
     cardEl.classList.add('country-border');
     const [{ name: { official }, capital="none", population, flags: { svg }, languages }] = country;
-    markup = `
+    const markup = `
         <img src="${svg}" alt="">
         <span class="name">${official}</span>
         <p class="data">Capital: <span>${capital}</span></p>
