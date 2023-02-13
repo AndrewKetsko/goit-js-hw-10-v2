@@ -37,6 +37,7 @@ li>span {
   margin-left: 10px;
   font-size: 22px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .name {

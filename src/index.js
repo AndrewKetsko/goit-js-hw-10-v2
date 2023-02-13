@@ -9,11 +9,14 @@ const listEl = document.querySelector('.country-list');
 const cardEl = document.querySelector('.country-info');
 
 inputEl.addEventListener('input', debounce(func, 1000));
+// listEl.addEventListener('click', listCC)
+
 
 function func(e) {
     listEl.innerHTML = '';
     cardEl.innerHTML = '';
     cardEl.classList.remove('country-border');
+    // listEl.removeEventListener('mouseover', listCC);
     if (e.target.value.trim()) {
         fetchCountries(e.target.value.trim())
             .then(toManyCountries)
@@ -42,8 +45,39 @@ function countryList(list) {
             </li>`)
     }).join('');
     listEl.innerHTML = markup;
+    console.log(list);
+    listEl.addEventListener('mouseover', cardFromList);
     throw new Error();
+
+    function cardFromList(e) {
+        if (e.target.nodeName !== "SPAN") {
+            return;
+        }
+            // console.log(list);
+    // console.log(e.target.textContent);
+    const country = [list.find(el => el.name.official === e.target.textContent)];
+        console.log(country);
+        countryCard(country);
+        // listEl.removeEventListener('click', cardFromList);
+        // listEl.addEventListener('click', cardFromList);
+
+    }
 };
+
+// function listCC(e) {
+//     if (e.target.nodeName !== "SPAN") {
+//         return;
+//     }
+    // console.log(list);
+    // console.log(e.target.textContent);
+    // const country = list.find(el => official === e.target.textContent);
+        // console.log(country);
+//     fetchCountries(e.target.textContent)
+//             .then(toManyCountries)
+//             .then(countryList)
+//             .then(countryCard)
+//             .catch(() => { });
+// }
 
 function countryCard(country) {
     cardEl.classList.add('country-border');
