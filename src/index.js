@@ -9,14 +9,14 @@ const listEl = document.querySelector('.country-list');
 const cardEl = document.querySelector('.country-info');
 
 inputEl.addEventListener('input', debounce(func, 1000));
-// listEl.addEventListener('click', listCC)
 
 
+let list;
 function func(e) {
     listEl.innerHTML = '';
     cardEl.innerHTML = '';
     cardEl.classList.remove('country-border');
-    // listEl.removeEventListener('mouseover', listCC);
+
     if (e.target.value.trim()) {
         fetchCountries(e.target.value.trim())
             .then(toManyCountries)
@@ -26,7 +26,8 @@ function func(e) {
     }
 };
 
-function toManyCountries(list) {
+function toManyCountries(data) {
+    list = data;
     if (list.length > 10) { 
         throw new Error(Notify.info('Too many matches found. Please enter a more specific name.'));
     } 
@@ -34,34 +35,25 @@ function toManyCountries(list) {
 };
 
 function countryList(list) {
-    if (list.length === 1) { return list; }
+    if (list.length === 1) {
+        return list;
+    }
     cardEl.innerHTML = '';
-    const markup = list.map(el => {
-        const { name: { official }, flags: { svg } } = el;
-        return(`
-            <li>
-                <img src="${svg}" alt="">
-                <span>${official}</span>
-            </li>`)
-    }).join('');
+    const markup = list
+        .map(({ name: { official }, flags: { svg } }) =>
+            `<li><img src="${svg}" alt=""><span>${official}</span></li>`)
+        .join('');
     listEl.innerHTML = markup;
-    console.log(list);
+    listEl.removeEventListener('mouseover', cardFromList);
     listEl.addEventListener('mouseover', cardFromList);
     throw new Error();
-
+};
     function cardFromList(e) {
         if (e.target.nodeName !== "SPAN") {
             return;
         }
-            // console.log(list);
-    // console.log(e.target.textContent);
     const country = [list.find(el => el.name.official === e.target.textContent)];
-        console.log(country);
         countryCard(country);
-        // listEl.removeEventListener('click', cardFromList);
-        // listEl.addEventListener('click', cardFromList);
-
-    }
 };
 
 // function listCC(e) {
